@@ -28,7 +28,8 @@
         }
         .footer {
             background-color: #e8ed5f;
-            padding: 25px;
+            padding: 10px;
+            width:70%;
         }
         .carousel-caption {
             background: rgba(0, 0, 0, 0.5);
@@ -39,7 +40,7 @@
         }
         .modal-body {
             padding: 20px;}
-            .modal-content {
+        .modal-content {
     background-color: #f1adf3; /* Change this color to your desired background color */
     border-radius: 10px; /* Add some border-radius for rounded corners */
     box-shadow: 0 0 20px rgba(221, 187, 231, 0.1); /* Add a box shadow for depth */
@@ -85,7 +86,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#" style="color:darkmagenta">BookShopie</a>
+                <a class="navbar-brand" href="#" style="color:darkmagenta">BookShoppie</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -100,13 +101,53 @@
                             <a class="nav-link" href="#" id="contactLink"style="color:darkmagenta">Contact</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    <form id="searchForm">
+                        <input id="searchInput" type="text" placeholder="Search for a book...">
+                        <button type="submit">Search</button>
                     </form>
+                
                 </div>
             </div>
         </nav>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("searchForm").addEventListener("submit", function(event) {
+                    event.preventDefault(); // Prevent the default form submission
+                    
+                    var searchTerm = document.getElementById("searchInput").value.toLowerCase();
+                    var books = document.querySelectorAll(".card-title"); // Updated selector to target card titles
+                    var bookFound = false;
+            
+                    books.forEach(function(book) {
+                        var bookTitle = book.textContent.toLowerCase();
+                        var card = book.closest(".card"); // Get the parent card element
+                        if (bookTitle.includes(searchTerm)) {
+                            card.style.display = "block"; // Show the card if it matches the search term
+                            bookFound = true;
+                        } else {
+                            card.style.display = "none"; // Hide the card if it doesn't match
+                        }
+                    });
+            
+                    if (bookFound) {
+                        alert("Book found and displayed below.");
+                    } else {
+                        alert("Book not available. We will update about it soon.");
+                    }
+                });
+            });
+        </script>
+        <script>
+    function addToCart() {
+        var outOfStock = true; 
+if (outOfStock) {
+            var outOfStockModal = new bootstrap.Modal(document.getElementById("outOfStockModal"));
+            outOfStockModal.show();
+        } else {
+            console.log("Book added to cart");
+        }
+    }
+</script>
 <!-- Contact Modal -->
         <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -154,8 +195,9 @@
                     </select>
                           </div>
                           <div class="col-md-6 d-flex justify-content-end">
-                            <button id="wishlistButton" class="btn btn-outline-danger me-2" onclick="viewWishlist()" style="color:lightgreen" >View Wishlist</button>
-                            <button id="cart" class="btn btn-outline-danger" onclick="toggleWishlist()" style="color:lightgreen">View Cart</button>
+                            <button id="wishlistButton" class="btn btn-outline-danger me-2" onclick="viewWishlist()" style="color:rgb(230, 242, 230)" >View Wishlist</button>
+                            <button id="cart" class="btn btn-outline-danger" onclick="toggleWishlist()" style="color:rgb(241, 245, 241)">View Cart</button>
+                            <button id="orders" class="btn btn-outline-danger" onclick="toggleWishlist()" style="color:rgb(232, 241, 232)">Orders</button>
                         </div>
          </header>
 <hr>
@@ -427,11 +469,12 @@
         </form>
       </div>
 <!-- Footer -->
-    <footer class="footer mt-4">
+    <footer class="footer mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <p>&copy; 2024 BookStore. All rights reserved.</p>
+                    <a href="#">info@bookshoppie.com</a>
                 </div>
                 <div class="col-md-6 text-end">
                     <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Contact Us</a>
